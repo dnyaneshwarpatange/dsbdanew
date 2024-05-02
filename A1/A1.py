@@ -12,13 +12,13 @@
 # Importing libraries
 import pandas as pd
 import numpy as np
-pd.set_option('future.no_silent_downcasting', False)
+pd.set_option('mode.chained_assignment', None)
 #---------------------------------------------------------------------------------------
 # Reading dataset
 df = pd.read_csv('Placement.csv')
 #---------------------------------------------------------------------------------------
 # Display basic information
-print('Information of Dataset:\n', df.info)
+print('Information of Dataset:\n', df.info())
 print('Shape of Dataset (row x column): ', df.shape)
 print('Columns Name: ', df.columns)
 print('Total elements in dataset:', df.size)
@@ -34,10 +34,9 @@ print('Statistical information of Numerical Columns: \n',df.describe())
 print('Total Number of Null Values in Dataset:', df.isna().sum())
 #---------------------------------------------------------------------------------------
 # Fill the missing values
-df['gender'].fillna(df['gender'].mode()[0])
-df['ssc_p'].fillna(df['ssc_p'].mean())
-print('Mode of ssc_b: ', df['ssc_b'].mode())
-df['ssc_b'].fillna(df['ssc_b'].mode()[0])
+df['gender'].fillna(df['gender'].mode()[0], inplace=True)
+df['ssc_p'].fillna(df['ssc_p'].mean(), inplace=True)
+df['ssc_b'].fillna(df['ssc_b'].mode()[0], inplace=True)
 print('Total Number of Null Values in Dataset:', df.isna().sum())
 #---------------------------------------------------------------------------------------
 # changing data type of columns
@@ -54,7 +53,7 @@ print('Change in datatype: ', df['sl_no'].dtypes)
 # 3. OrdinalEncoder using scikit-learn
 
 # Find and replace method
-df['gender'].replace(['M','F'],[0,1])
+df['gender'].replace(['M','F'],[0,1], inplace=True)
 # Label encoding method
 df['ssc_b']=df['ssc_b'].astype('category') #change data type to category
 df['ssc_b']=df['ssc_b'].cat.codes
